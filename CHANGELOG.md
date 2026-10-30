@@ -2,6 +2,7 @@
 
 ## 0.2.0（未公開）
 - アイコンを追加（緑の盾と改行マーク）
+- App Store 配布用の Mac アプリ（Xcode プロジェクト）を追加
 - ツールバーのボタンから、「Enter＝改行、⌘+Enter＝送信」を使うサイトを登録・解除できるようにした
 - claude.ai / ChatGPT（ProseMirror）: 変換確定のすぐ後の Enter で改行されない問題を修正
 - Perplexity（Lexical）: Enter で改行されない問題を修正

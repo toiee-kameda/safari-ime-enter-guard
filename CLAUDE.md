@@ -15,7 +15,8 @@ Safari（macOS）を日本語入力で使うときの Enter キーの不便を�
 - `design/` … アイコンの元データ（SVG）と書き出しスクリプト、App Store 用 1024px アイコン
 - `test/ime-test.html` … 機能1を確認するテストページ
 - `docs/` … 技術メモ、テスト手順、App Store 公開手順、Claude Code 用プロンプト例
-- `xcode/` … （予定）`safari-web-extension-converter` で作る Xcode プロジェクト
+- `xcode/IME Enter Guard/` … Mac アプリの Xcode プロジェクト（App Store 用）。`extension/` を直接参照している。
+  `extension/` にファイルを追加したら、Xcode の Extension ターゲットの Resources にも追加する。詳細は docs/app-store.md
 
 ## 開発ルール
 - 外部ライブラリやビルドツールは使わない（素の JavaScript のみ）。
@@ -32,3 +33,5 @@ Safari（macOS）を日本語入力で使うときの Enter キーの不便を�
 - chatgpt.com での機能2
 - 合成イベント（isTrusted=false）を無視するサイトで、⌘+Enter 送信が効くか
 - keyup で送信するサイトで、機能1が効くか
+- Xcode でビルドしたアプリ版を Safari で動かした確認（署名の設定がまだ）
+- macOS 12〜26 での動作

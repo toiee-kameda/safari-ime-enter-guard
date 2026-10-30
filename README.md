@@ -47,6 +47,9 @@ Enter で改行し、⌘+Enter で送信できると、書きやすくなりま�
 ### App Store から（準備中）
 Mac App Store での配布を予定しています。
 
+### Xcode でビルドする
+[docs/app-store.md](docs/app-store.md) の「自分の Mac で使う」をご覧ください。Safari を終了しても外れません。
+
 ### ソースから試す（Xcode 不要・一時的）
 1. Safari の「設定」>「詳細」で「Web デベロッパ用の機能を表示」をオンにします。
 2. 「設定」>「デベロッパ」タブの「一時的な拡張機能を追加」から、このリポジトリの `extension` フォルダを選びます。
@@ -69,6 +72,7 @@ extension/   拡張機能の本体（Safari に読み込むのはこのフォル
   popup.html/js   ツールバーのボタンを押したときの画面
   images/         アイコン
 design/      アイコンの元データ（SVG）と書き出しスクリプト
+xcode/       Mac アプリ（App Store 用）の Xcode プロジェクト
 test/        動作確認用のテストページ
 docs/        技術メモ・テスト手順・公開手順
 ```
