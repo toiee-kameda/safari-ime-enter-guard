@@ -34,3 +34,6 @@ Safari（macOS）を日本語入力で使うときの Enter キーの不便を�
 - 合成イベント（isTrusted=false）を無視するサイトで、⌘+Enter 送信が効くか
 - keyup で送信するサイトで、機能1が効くか
 - macOS 12〜26 での動作
+
+## 確認済み（アプリ版）
+- Xcode でビルドしたアプリ版が、Safari で動作した（2026-10-30。無料の Apple ID の Personal Team で署名）。
