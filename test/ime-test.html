@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>IME Enter テストページ</title>
+<style>
+  body { font-family: -apple-system, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; }
+  section { border: 1px solid #ccc; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; }
+  textarea, input, [contenteditable] { width: 100%; box-sizing: border-box; font-size: 16px; padding: .5rem; border: 1px solid #999; border-radius: 6px; }
+  [contenteditable] { min-height: 3em; }
+  #log { background: #f4f4f4; padding: .5rem; white-space: pre-wrap; font-size: 13px; min-height: 6em; }
+</style>
+</head>
+<body>
+<h1>IME Enter テストページ</h1>
+<p>Safari で日本語を入力し、変換を Enter で確定してください。確定しただけで「送信」がログに出たら問題が再現しています。</p>
+
+<section>
+  <h2>1. フォーム（isComposing だけで判定する悪い例）</h2>
+  <input id="f1" placeholder="ここに日本語を入力して Enter で確定">
+</section>
+
+<section>
+  <h2>2. チャット風 textarea（Enter で送信）</h2>
+  <textarea id="f2" rows="3" placeholder="Enter で送信、Shift+Enter で改行"></textarea>
+</section>
+
+<section>
+  <h2>3. チャット風 contenteditable（Enter で送信）</h2>
+  <div id="f3" contenteditable="true"></div>
+</section>
+
+<h2>ログ</h2>
+<p>拡張機能: <strong id="status"></strong>（オン／オフを切り替えたら、ページを再読み込みしてください）</p>
+<p><button id="clear">ログを消す</button></p>
+<div id="log"></div>
+
+<script>
+  // ログは再読み込みしても消えないように sessionStorage に残す
+  const KEY = 'ime-test-log';
+  const store = {
+    get() { try { return sessionStorage.getItem(KEY) || ''; } catch { return ''; } },
+    set(v) { try { sessionStorage.setItem(KEY, v); } catch {} },
+  };
+  const logEl = document.getElementById('log');
+  logEl.textContent = store.get();
+  const guardOn = () => document.documentElement.dataset.imeEnterGuard === 'on';
+  document.getElementById('status').textContent = guardOn() ? 'オン' : 'オフ';
+  document.getElementById('clear').addEventListener('click', () => {
+    logEl.textContent = '';
+    store.set('');
+  });
+  const log = (msg) => {
+    logEl.textContent = `${new Date().toLocaleTimeString()} [拡張${guardOn() ? 'オン' : 'オフ'}] ${msg}\n` + logEl.textContent;
+    store.set(logEl.textContent);
+  };
+  const getText = (el) => (el.value !== undefined ? el.value : el.innerText).trim();
+  for (const id of ['f1', 'f2', 'f3']) {
+    const el = document.getElementById(id);
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) {
+        e.preventDefault();
+        log(`[${id}] 送信: "${getText(el)}" (keyCode=${e.keyCode}, isTrusted=${e.isTrusted})`);
+      }
+    });
+  }
+</script>
+</body>
+</html>
