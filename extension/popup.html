@@ -4,31 +4,88 @@
 <meta charset="utf-8">
 <title>IME Enter Guard</title>
 <style>
-  :root { color-scheme: light dark; }
-  body { font-family: -apple-system, sans-serif; font-size: 13px; width: 280px; margin: 0; padding: 12px; line-height: 1.5; }
-  h1 { font-size: 14px; margin: 0 0 8px; }
+  :root {
+    color-scheme: light dark;
+    --muted: #6e6e73; --line: rgba(0,0,0,.12); --accent: #007aff;
+    --ok-bg: #e6f4ea; --ok-text: #1e6b36;
+    --cur-bg: #e8f1ff; --key-bg: #fff; --switch-off: #c7c7cc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --muted: #98989d; --line: rgba(255,255,255,.15); --accent: #0a84ff;
+      --ok-bg: #1d3a26; --ok-text: #8fd6a4;
+      --cur-bg: #1c2f4a; --key-bg: #3a3a3c; --switch-off: #636366;
+    }
+  }
+  body { font-family: -apple-system, sans-serif; font-size: 13px; width: 290px; margin: 0; padding: 14px 16px; line-height: 1.6; }
+  h1 { font-size: 14px; margin: 0 0 10px; }
+  h2 { font-size: 13px; margin: 18px 0 8px; }
+  h3 { font-size: 12px; color: var(--muted); margin: 18px 0 4px; }
+  [hidden] { display: none !important; }
+
+  .callout { display: flex; gap: 8px; background: var(--ok-bg); color: var(--ok-text); border-radius: 8px; padding: 8px 10px; }
+  .callout svg { flex: none; margin-top: 2px; }
+  .callout strong { display: block; }
+  .callout small { font-size: 12px; }
+
   .host { font-weight: 600; word-break: break-all; }
-  label { display: flex; gap: 6px; align-items: flex-start; margin: 8px 0 12px; cursor: pointer; }
-  .note { color: GrayText; font-size: 12px; }
-  h2 { font-size: 12px; margin: 12px 0 4px; }
+  .here { font-size: 12px; color: var(--muted); }
+  .keys { margin-top: 2px; line-height: 1.9; }
+  .note { color: var(--muted); font-size: 12px; margin: 0; }
+  kbd {
+    display: inline-block; min-width: 14px; padding: 0 6px; margin: 0 1px;
+    border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px;
+    background: var(--key-bg); font: 12px/18px -apple-system, sans-serif; text-align: center;
+  }
+
+  /* スイッチ（中身はチェックボックス） */
+  .toggle { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; cursor: pointer; font-size: 12px; color: var(--muted); }
+  .toggle input {
+    appearance: none; -webkit-appearance: none; margin: 0; cursor: pointer;
+    width: 32px; height: 18px; border-radius: 9px; background: var(--switch-off);
+    position: relative; transition: background .15s;
+  }
+  .toggle input::after {
+    content: ""; position: absolute; left: 2px; top: 2px; width: 14px; height: 14px;
+    border-radius: 50%; background: #fff; transition: left .15s;
+  }
+  .toggle input:checked { background: var(--accent); }
+  .toggle input:checked::after { left: 16px; }
+  .toggle input:checked + span { color: var(--accent); font-weight: 600; }
+
   ul { list-style: none; padding: 0; margin: 0; }
-  li { display: flex; justify-content: space-between; align-items: center; padding: 2px 0; }
-  button { font-size: 12px; }
+  li { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-top: 1px solid var(--line); }
+  li.current { background: var(--cur-bg); color: var(--accent); border-top-color: transparent; border-radius: 6px; margin: 0 -6px; padding: 4px 6px; }
+  li.current + li { border-top-color: transparent; }
+  li.empty { color: var(--muted); font-size: 12px; }
+  .remove { border: 0; background: none; color: var(--muted); font-size: 15px; line-height: 1; padding: 2px 4px; cursor: pointer; border-radius: 4px; }
+  .remove:hover { background: var(--line); color: inherit; }
+  li.current .remove { color: inherit; }
 </style>
 </head>
 <body>
 <h1>IME Enter Guard</h1>
+
+<div class="callout">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-4.5"/></svg>
+  <div>
+    <strong>「変換確定のEnterで送信」を防ぎ中</strong>
+    <small>すべてのサイトで、いつでも有効</small>
+  </div>
+</div>
+
+<h2>追加機能（改行）設定</h2>
 <div id="current">
-  <div>このサイト: <span class="host" id="host"></span></div>
-  <label>
-    <input type="checkbox" id="toggle">
-    <span>Enter＝改行、⌘+Enter＝送信 にする</span>
+  <div><span class="host" id="host"></span> <span class="here">（いまのサイト）</span>で、</div>
+  <div class="keys"><kbd>Enter</kbd> を改行に、<br><kbd>⌘</kbd>+<kbd>Enter</kbd> で送信にします。</div>
+  <label class="toggle">
+    <input type="checkbox" role="switch" id="toggle">
+    <span id="toggleLabel">オフ</span>
   </label>
 </div>
 <p class="note" id="unavailable" hidden>このページでは設定できません。普通のWebページを開いてから押してください。</p>
-<p class="note">変換確定のEnterで送信されない機能は、全サイトで常に有効です。</p>
 
-<h2>登録済みのサイト</h2>
+<h3>有効化済みのサイト（<span id="count">0</span>）</h3>
 <ul id="list"></ul>
 
 <script src="popup.js"></script>

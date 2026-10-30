@@ -11,7 +11,9 @@
 
   const hostEl = document.getElementById('host');
   const toggleEl = document.getElementById('toggle');
+  const toggleLabelEl = document.getElementById('toggleLabel');
   const listEl = document.getElementById('list');
+  const countEl = document.getElementById('count');
 
   let sites = [];
   let currentHost = null;
@@ -33,20 +35,27 @@
 
   function render() {
     if (currentHost) toggleEl.checked = matchesHost(currentHost, sites);
+    toggleLabelEl.textContent = toggleEl.checked ? 'オン' : 'オフ';
+    countEl.textContent = sites.length;
     listEl.textContent = '';
     if (sites.length === 0) {
       const li = document.createElement('li');
-      li.className = 'note';
+      li.className = 'empty';
       li.textContent = 'まだありません';
       listEl.appendChild(li);
       return;
     }
     for (const d of sites) {
       const li = document.createElement('li');
+      // いま開いているサイトに当てはまる行は色を付ける
+      if (currentHost && matchesHost(currentHost, [d])) li.className = 'current';
       const name = document.createElement('span');
       name.textContent = d;
       const del = document.createElement('button');
-      del.textContent = '解除';
+      del.className = 'remove';
+      del.textContent = '×';
+      del.title = '解除';
+      del.setAttribute('aria-label', d + ' を解除');
       del.addEventListener('click', () => {
         sites = sites.filter((s) => s !== d);
         saveSites();
