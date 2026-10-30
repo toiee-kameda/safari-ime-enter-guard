@@ -11,6 +11,8 @@ Safari（macOS）を日本語入力で使うときの Enter キーの不便を�
 - `extension/` … Web Extension 本体（Manifest V3）。App Store 版もここを元にする
   - `content.js` … 本体（document_start / 全フレーム / キャプチャ段階で keydown を処理）
   - `popup.html` / `popup.js` … サイトの登録・解除（`storage.local` の `sites`）
+  - `images/` … アイコン（`design/export-icons.sh` で書き出す。手で編集しない）
+- `design/` … アイコンの元データ（SVG）と書き出しスクリプト、App Store 用 1024px アイコン
 - `test/ime-test.html` … 機能1を確認するテストページ
 - `docs/` … 技術メモ、テスト手順、App Store 公開手順、Claude Code 用プロンプト例
 - `xcode/` … （予定）`safari-web-extension-converter` で作る Xcode プロジェクト
@@ -30,4 +32,4 @@ Safari（macOS）を日本語入力で使うときの Enter キーの不便を�
 - chatgpt.com での機能2
 - 合成イベント（isTrusted=false）を無視するサイトで、⌘+Enter 送信が効くか
 - keyup で送信するサイトで、機能1が効くか
-- アイコン未作成
+- アイコンを Safari 実機で表示確認していない

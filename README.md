@@ -67,6 +67,8 @@ extension/   拡張機能の本体（Safari に読み込むのはこのフォル
   manifest.json   拡張機能の設定
   content.js      Enter キーを処理する本体
   popup.html/js   ツールバーのボタンを押したときの画面
+  images/         アイコン
+design/      アイコンの元データ（SVG）と書き出しスクリプト
 test/        動作確認用のテストページ
 docs/        技術メモ・テスト手順・公開手順
 ```

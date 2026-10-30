@@ -3,6 +3,13 @@
   "name": "IME Enter Guard",
   "version": "0.2.0",
   "description": "日本語入力の確定Enterで送信されてしまう問題を防ぎ、指定サイトでは ⌘/Ctrl+Enter で送信できるようにします。",
+  "icons": {
+    "48": "images/icon-48.png",
+    "96": "images/icon-96.png",
+    "128": "images/icon-128.png",
+    "256": "images/icon-256.png",
+    "512": "images/icon-512.png"
+  },
   "content_scripts": [
     {
       "matches": [
@@ -20,6 +27,10 @@
   ],
   "action": {
     "default_title": "IME Enter Guard",
+    "default_icon": {
+      "16": "images/toolbar-icon-16.png",
+      "32": "images/toolbar-icon-32.png"
+    },
     "default_popup": "popup.html"
   }
 }
