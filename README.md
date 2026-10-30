@@ -84,7 +84,7 @@ docs/        技術メモ・テスト手順・公開手順
 - App Store 公開までの手順: [docs/app-store.md](docs/app-store.md)
 - 外部ライブラリやビルドツールは使わず、素の JavaScript だけで書いています。
 
-不具合の報告やサイトの追加要望は、GitHub の Issues へどうぞ。
+不具合の報告やサイトの追加要望は、[GitHub の Issues](https://github.com/toiee-kameda/safari-ime-enter-guard/issues) へどうぞ。
 報告のときは、サイトの URL と、何を押してどうなったかを書いてください。
 
 ## ライセンス

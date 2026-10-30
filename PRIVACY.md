@@ -23,7 +23,7 @@ IME Enter Guard（以下「本拡張機能」）は、利用者の個人情報�
 この許可は Enter キーの処理だけに使い、ページの内容を読み取ったり保存したりはしません。
 
 ### お問い合わせ
-GitHub リポジトリの Issues からご連絡ください。
+GitHub リポジトリの Issues（https://github.com/toiee-kameda/safari-ime-enter-guard/issues）からご連絡ください。
 
 ## English
 
@@ -41,4 +41,4 @@ and is removed when you uninstall the extension.
 The extension asks for access to websites only so that it can handle the Enter key
 on every site. It does not read or store page contents.
 
-For questions, please open an issue on the GitHub repository.
+For questions, please open an issue at https://github.com/toiee-kameda/safari-ime-enter-guard/issues.

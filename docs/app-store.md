@@ -9,8 +9,8 @@
 - [ ] 拡張機能の名前と説明の英語・日本語化（`extension/_locales/`）
 - [ ] アプリを開いたときの画面（`Resources/Base.lproj/Main.html`）の日本語化
 - [ ] App Store の説明文・スクリーンショット
-- [ ] プライバシーポリシーの公開 URL（[PRIVACY.md](../PRIVACY.md) を GitHub 上で公開して使う）
-- [ ] サポート用 URL（GitHub の Issues など）
+- [x] プライバシーポリシーの公開 URL: https://github.com/toiee-kameda/safari-ime-enter-guard/blob/main/PRIVACY.md
+- [x] サポート用 URL: https://github.com/toiee-kameda/safari-ime-enter-guard/issues
 
 ## 2. Xcode プロジェクト（作成済み）
 Safari の拡張機能は、Mac アプリに入れて配布します。`xcode/IME Enter Guard/` に、次のコマンドで作りました。
