@@ -33,5 +33,4 @@ Safari（macOS）を日本語入力で使うときの Enter キーの不便を�
 - chatgpt.com での機能2
 - 合成イベント（isTrusted=false）を無視するサイトで、⌘+Enter 送信が効くか
 - keyup で送信するサイトで、機能1が効くか
-- Xcode でビルドしたアプリ版を Safari で動かした確認（署名の設定がまだ）
 - macOS 12〜26 での動作
